@@ -44,6 +44,8 @@ class Evento{
         Evento(int _duracao){
             this->duracao = _duracao;
         }
+        public:
+            virtual void imprimir() = 0;
 };
 
 class Roteiro : public Evento{
@@ -54,6 +56,8 @@ class Roteiro : public Evento{
             this->titulo = _titulo;
             this->ordem = _ordem;
         }
+        public:
+            virtual void imprimir() = 0;
 
 };
 
@@ -64,6 +68,13 @@ class Deslocamento : public Evento{
         Deslocamento(int _duracao, string _origem, string _destino):Evento(_duracao){
             this->origem = _origem;
             this->destino = _destino;
+        }
+
+        void imprimir() override{
+            cout << "-- Deslocamento --" << endl;
+            cout << "De: " << this->origem << endl;
+            cout << "Para: " << this->destino << endl;
+            cout << "Duracao: " << this->duracao << endl;
         }
 
 };
@@ -124,6 +135,11 @@ int main(){
     Pacote *bronze = new Pacote(r1); //polimorfismo
     bronze->inserirEvento(d1);
     bronze->inserirEvento(p1);
+
+    for(auto el : bronze->listaEventos){
+        cout << endl;
+        el -> imprimir();
+    }
 
     Reserva *reserva01 = new Reserva(cli01,bronze);
     
